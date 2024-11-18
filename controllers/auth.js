@@ -24,7 +24,6 @@ exports.register = async (req, res) => {
 }
 
 // User login
-// would be cool to be able to log in with both e-mail and username
 exports.login = async (req, res) => {
     try {
         const { username, email, password } = req.body;
