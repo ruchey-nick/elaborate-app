@@ -47,16 +47,6 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-userSchema.pre('save', function() {
-    console.log(this)
-    console.log('\n\n\n\n')
-    console.log(this.library)
-
-    if (this.library) {
-        
-    }
-}) 
-
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
