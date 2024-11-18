@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
         if (email) {
             user = await User.findOne({ email });
         } else if (username) {
-            user = await User.findOne({ usename });
+            user = await User.findOne({ username });
         } else {
             return res.status(401).json({error: "Username or email missing!"})
         }
