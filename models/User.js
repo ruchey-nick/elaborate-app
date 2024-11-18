@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         unique: [true, 'This username is already taken!'],
         validate: {
             validator: function(v) {
-                return /^[\w_]/.test(v)
+                return /^[\w_]/.match(v)
             },
             message: 'Username may only contain letters, numbers and underscores!'
         }
