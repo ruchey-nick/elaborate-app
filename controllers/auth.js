@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config({ path: '../config.env' })
 const bcrypt = require('bcryptjs');
 
-// MOVE REGISTER AND LOGIN INTO AN AUTH FILE!
-
 // User registration
 exports.register = async (req, res) => {
     try {
@@ -26,12 +24,20 @@ exports.register = async (req, res) => {
 }
 
 // User login
+// would be cool to be able to log in with both e-mail and username
 exports.login = async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const user = await User.findOne({ username });
+        const { username, email, password } = req.body;
+        if (email) {
+            const user = await User.findOne({ email });
+        } else if (username) {
+            const user = await User.findOne({ usename });
+        } else {
+            return res.status(401).json({error: "Username or email missing!"})
+        }
+        
         if (!user) {
-            return res.status(401).json({ error: 'Authentication failed, incorrect username' });
+            return res.status(401).json({ error: 'Authentication failed, incorrect username or email' });
         }
         const passwordMatch = bcrypt.compare(password, user.password);
         if (!passwordMatch) {
@@ -46,19 +52,5 @@ exports.login = async (req, res) => {
     }
 }
 
-
-// how did functions for library get here?
-
-// exports.getOneWord = (req, res, next) => {
-//     res.status(500).json({
-//         status: "erorr",
-//         message: "Path yet to be implemented!"
-//     })
-// }
-
-// exports.addWord = (req, res, next) => {
-//     res.status(500).json({
-//         status: 'error',
-//         mesasge: 'Path yet to be implemented!'
-//     })
-// }
+// Password reset
+// Yet to be done
