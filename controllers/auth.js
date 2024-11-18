@@ -27,10 +27,11 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { username, email, password } = req.body;
+        let user
         if (email) {
-            const user = await User.findOne({ email });
+            user = await User.findOne({ email });
         } else if (username) {
-            const user = await User.findOne({ usename });
+            user = await User.findOne({ usename });
         } else {
             return res.status(401).json({error: "Username or email missing!"})
         }
