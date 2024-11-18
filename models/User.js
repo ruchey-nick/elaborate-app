@@ -1,16 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 
-// NEED TO HAST THE PASSWORD!
-class LibraryWord {
-    constructor(word) {
-        this.word = word
-        this.sentences = []
-        this.repetitionIteration = 0
-        this.lastRepeated = Date.now()
-    }
-} 
-
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
