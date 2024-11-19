@@ -1,7 +1,5 @@
-const express = require('express')
+const router = require('express').Router()
 const authController = require('../controllers/auth')
-
-const router = express.Router()
 
 //router.get('/learn', userController.getOneWord)
 //router.post('/add-word', userController.addWord)

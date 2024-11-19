@@ -43,7 +43,9 @@ app.use((req, res, next) => {
 });
 
 userRouter = require('./routes/userRouter')
+libraryRouter = require('./routes/libraryRouter')
 // Routes
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/library', libraryRouter)
 
 module.exports = app

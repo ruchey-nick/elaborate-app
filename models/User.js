@@ -23,19 +23,33 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Password must be specified!"]
+        required: [true, "Password must be specified!"],
+        select: false,
+        minlength: [8, "Password must be at least 8 characters long!"],
     },
     role: {
         type: String,
         default: 'user',
         required: true,
         enum: ['user', 'admin']
-    },  
+    },
+    passwordChangedAt: Date,
+
     library: {
         type: [Object],
         default: []
     }
 })
+
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+    if (this.passwordChangedAt) {
+        const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+
+        return JWTTimestamp < changedTimestamp;
+    }
+
+    return false;
+};
 
 const User = mongoose.model('User', userSchema)
 
