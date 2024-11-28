@@ -22,7 +22,7 @@ exports.addWord = async (req, res) => {
     })
 }
 
-exports.getWord = async (req, res) => {
+exports.getWords = async (req, res) => {
     const words = (await User.findById(req.user.id).select('library -_id')).library 
     
     if (words.length === 0) { // could change to randomly advised words
