@@ -5,7 +5,7 @@ class LibraryWord {
         this.word = word
         this.sentences = []
         this.repetitionIteration = 0
-        this.lastRepeated = Date.now()
+        this.lastRepeated = new Date(Date.now())
     }
 } 
 
@@ -29,9 +29,19 @@ exports.getWord = async (req, res) => {
         throw new Error("Your library is empty!")
     }
 
-    // sort words in order of priority!
-    // 1. By due !date! (look at the lastRepeated and repetitionIteration (each iteration has its own time period))
-    // 2. Within the time priority, sort words so that those that have the least repetitionIteration are in the front
+    // sort words in order of priority
+    words.sort((a, b) => {
+        // first, sort by the date
+        const aDate = a.lastRepeated.toISOString().split('T')[0]
+        const bDate = b.lastRepeated.toISOString().split('T')[0]
+        console.log(aDate, bDate)
+        if (aDate !== bDate) {
+            return aDate.localeCompare(bDate)
+        }
+        // if dates are the same, then prioritize those words that were repeated the least amount of tmes
+        return a.repetitionIteration > b.repetitionIteration ? 1 : -1
+    })
+    // What about adding tags to prioritize sorting by a topic (for each individual some topics are more imporant than others)?
 
     res.status(200).json({
         status: "success",
